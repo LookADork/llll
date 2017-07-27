@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const YTDL = require("ytdl-core");
+const embed = new Discord.RichEmbed()
 
 const PREFIX = '//'; // Command Prefix
 
@@ -9,28 +10,6 @@ var token = "MzM5ODc4NDg1NzU1NDI4ODY0.DFrBxA.79udW8StpzwAvAPaCs_wGEv1Two";
 var voiceChannel = null;
 var servers = {};
 var queue = [];
-
-
-// JSON for JWU quotes
-var jwu_quotes = [
-  {"quote": "You're a bot" },
-  {"quote": "I need to go make salad" },
-  {"quote": "Wanna play old school Runescape?" },
-  {"quote": "IBuyPower got unbanned" },
-  {"quote": "I got banned for botting in Runescape" },
-  {"quote": "New year new me" },
-  {"quote": "If you die in the first 10 seconds I'm not playing anymore" },
-  {"quote": "I have to wake up at 6 A.M." }
-];
-
-// Pubg Strats
-var pubgstrats = [
-  {strat: "Drop Big Box"},
-  {strat: "Drop Titties"},
-  {strat: "AFK Strat"},
-  {strat: "Spawn Island"},
-  {strat: "Land away from ZICO and get flamed"}
-];
 
 // List of commands in json format
 var commands = [
@@ -87,11 +66,22 @@ var commands = [
     }
   },
   {
+    command:"kiss",
+    description: "Send a user a kiss",
+    parameters: ['user'],
+    execute: function(message, params){
+      var rand =  Math.floor(Math.random() * NUM_KISS);
+
+      embed.setImage(kiss[rand].link)
+
+      message.channel.sendMessage(params[1] + " You got a kiss from " + message.member, {embed});
+    }
+  },
+  {
     command:"shitjwusays",
-    description: "Sends a random JWU 2k17 quote",
+    description: "Sends a random JWu 2k17 quote",
     parameters:[],
     execute: function(message, params){
-      const NUM_JWU_QUOTES = 8;
       var rand =  Math.floor(Math.random() * NUM_JWU_QUOTES);
       message.channel.sendMessage(jwu_quotes[rand].quote);
     }
@@ -101,7 +91,6 @@ var commands = [
     description: "Tells you which strat to run on your next pubg game",
     parameters:[],
     execute: function(message, params){
-      const NUM_STRATS = "5";
       var rand =  Math.floor(Math.random() * NUM_STRATS);
       message.channel.sendMessage(pubgstrats[rand].strat);
     }
@@ -219,3 +208,39 @@ function search_command(command_name) {
 }
 
 bot.login(token);
+
+// Definitions
+
+const NUM_JWU_QUOTES = 8;
+// JSON for JWU quotes
+var jwu_quotes = [
+  {"quote": "You're a bot" },
+  {"quote": "I need to go make salad" },
+  {"quote": "Wanna play old school Runescape?" },
+  {"quote": "IBuyPower got unbanned" },
+  {"quote": "I got banned for botting in Runescape" },
+  {"quote": "New year new me" },
+  {"quote": "If you die in the first 10 seconds I'm not playing anymore" },
+  {"quote": "I have to wake up at 6 A.M." }
+];
+
+const NUM_STRATS = "6";
+// Pubg Strats
+var pubgstrats = [
+  {strat: "Drop Big Box"},
+  {strat: "Drop Titties"},
+  {strat: "AFK Strat"},
+  {strat: "Spawn Island"},
+  {strat: "Land away from ZICO and get flamed"},
+  {strat: "Don't pick up anything less than a 4x scope. You can just hold shift"}
+];
+
+const NUM_KISS = '5';
+// Kiss Gifs
+var kiss = [
+  {link:'https://media0.giphy.com/media/l0Eryp2ZPdCmeMIb6/giphy.gif'},
+  {link:'https://scontent.fyyz1-1.fna.fbcdn.net/v/t1.0-9/14191941_10205738006688913_6874955034717212194_n.jpg?oh=38dfc711445fd42464a664378c58c197&oe=5A0A1521'},
+  {link:'https://media2.giphy.com/media/3o72FiXBdWRy3aZHJm/giphy.gif'},
+  {link:'https://media1.giphy.com/media/10UUe8ZsLnaqwo/giphy.gif'},
+  {link:'https://media.giphy.com/media/G3va31oEEnIkM/giphy.gif'}
+];
