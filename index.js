@@ -10,6 +10,7 @@ var token = "MzM5ODc4NDg1NzU1NDI4ODY0.DFrBxA.79udW8StpzwAvAPaCs_wGEv1Two";
 var voiceChannel = null;
 var servers = {};
 var queue = [];
+var isPlaying = false;
 
 // List of commands in json format
 var commands = [
@@ -74,7 +75,7 @@ var commands = [
 
       embed.setImage(kiss[rand].link)
 
-      message.channel.sendMessage(params[1] + " You got a kiss from " + message.member, {embed});
+      message.channel.sendMessage(params[1] + ", you got a kiss from " + message.member, {embed});
     }
   },
   {
@@ -132,6 +133,38 @@ var commands = [
     }
   },
   {
+    command: "play",
+    description: "Plays the given youtube link",
+    parameters:['yt_link'],
+    execute: function(message,params){
+
+
+      if (!message.member.voiceChannel){ // User is not in a voice channel
+        message.channel.sendMessage("You must be in a voice channel to use this command");
+        return;
+      }
+
+      if (!servers[message.guild.id]) servers[message.guild.id] = {
+        queue:[]
+      };
+
+      var server = servers[message.guild.id];
+
+      if (!message.guild.voiceConnection) message.member.voiceChannel.join().then(function(connection){
+        if (isPlaying){ //Player is already playing
+          queue = queue.concat(params[1]);
+        } else { //Player is not playing
+          queue = queue.concat(params[1]);
+          isPlaying = true;
+          play(connection, message);
+        }
+      });
+    }
+  },
+  {
+
+  },
+  {
     command: "stop",
     description: "Stops playing music",
     parameters:[],
@@ -141,9 +174,37 @@ var commands = [
         connection.disconnect();
       });
       queue = [];
+      isPlaying = false;
     }
   }
 ];
+
+function play(connection, message){
+  var server = servers[message.guild.id];
+
+  server.dispatcher = connection.playStream(YTDL(queue[0], {filter:'audioonly'}));
+
+  shift(queue); //Remove first song from the queue
+
+  server.dispatcher.on('end', function(){ // On song end
+    if (queue[0] != null){ // Check if there are more songs in the queue
+       play(connection, message); // Play next song
+    } else {
+      connection.disconnect(); // Disconnect bot when there are no more songs in the queue
+    }
+  });
+}
+
+function shift(queue){
+  var count = 1;
+
+  queue[0] = null;
+
+  while (queue[count] != null){
+    queue[count - 1] = queue[count];
+    count++;
+  }
+}
 
 // Plays Everyday bro
 function playEverydayBro(connection, message){
@@ -211,7 +272,7 @@ bot.login(token);
 
 // Definitions
 
-const NUM_JWU_QUOTES = 8;
+const NUM_JWU_QUOTES = 9;
 // JSON for JWU quotes
 var jwu_quotes = [
   {"quote": "You're a bot" },
@@ -221,10 +282,11 @@ var jwu_quotes = [
   {"quote": "I got banned for botting in Runescape" },
   {"quote": "New year new me" },
   {"quote": "If you die in the first 10 seconds I'm not playing anymore" },
-  {"quote": "I have to wake up at 6 A.M." }
+  {"quote": "I have to wake up at 6 A.M." },
+  {"quote": "Reuben's not toxic" }
 ];
 
-const NUM_STRATS = "6";
+const NUM_STRATS = 6;
 // Pubg Strats
 var pubgstrats = [
   {strat: "Drop Big Box"},
@@ -235,7 +297,7 @@ var pubgstrats = [
   {strat: "Don't pick up anything less than a 4x scope. You can just hold shift"}
 ];
 
-const NUM_KISS = '5';
+const NUM_KISS = 5;
 // Kiss Gifs
 var kiss = [
   {link:'https://media0.giphy.com/media/l0Eryp2ZPdCmeMIb6/giphy.gif'},
