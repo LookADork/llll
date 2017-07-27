@@ -8,6 +8,7 @@ var token = "MzM5ODc4NDg1NzU1NDI4ODY0.DFrBxA.79udW8StpzwAvAPaCs_wGEv1Two";
 
 var voiceChannel = null;
 var servers = {};
+var queue = [];
 
 
 // JSON for JWU quotes
@@ -122,13 +123,55 @@ var commands = [
       }
 
     }
+  },
+  {
+    command: "team10hours",
+    description: "Everyday Bro 10 hours",
+    parameters:[],
+    execute: function(message, params){
+      var voiceChannel;
+
+      if (!message.member.voiceChannel){ // User is not in a voice channel
+        message.channel.sendMessage("You must be in a voice channel to use this command");
+      } else {
+        voiceChannel = message.member.voiceChannel; // Find the voice channel that the message was entered from
+        voiceChannel.join().then(function(connection){ // Bot joins the voice channel
+          playEverydayBro10(connection, message);
+        });
+      }
+
+    }
+  },
+  {
+    command: "stop",
+    description: "Stops playing music",
+    parameters:[],
+    execute: function(message, params){
+      voiceChannel = message.member.voiceChannel;
+      voiceChannel.join().then(function(connection){ // Bot joins the voice channel
+        connection.disconnect();
+      });
+      queue = [];
+    }
   }
 ];
 
+// Plays Everyday bro
 function playEverydayBro(connection, message){
   var server = servers[message.guild.id];
 
   server.dispatcher = connection.playStream(YTDL("https://www.youtube.com/watch?v=hSlb1ezRqfA", {filter:'audioonly'}));
+
+  server.dispatcher.on(end, function(){
+    connection.disconnect();
+  });
+}
+
+// Plays everydaybro 10 hours
+function playEverydayBro10(connection, message){
+  var server = servers[message.guild.id];
+
+  server.dispatcher = connection.playStream(YTDL("https://www.youtube.com/watch?v=vQs5qyQit7Y", {filter:'audioonly'}));
 
   server.dispatcher.on(end, function(){
     connection.disconnect();
