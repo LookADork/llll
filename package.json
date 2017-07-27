@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/andusy/Discord-Bot#readme",
   "dependencies": {
-    "discord.js": "^11.1.0"
+    "discord.js": "^11.1.0",
+    "opusscript": "0.0.3",
+    "ytdl-core": "^0.15.0"
   }
 }

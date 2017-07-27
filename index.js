@@ -1,9 +1,14 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
+const YTDL = require("ytdl-core");
 
 const PREFIX = '//'; // Command Prefix
 
-var token = "MzM5ODc4NDg1NzU1NDI4ODY0.DFrBxA.79udW8StpzwAvAPaCs_wGEv1Two"
+var token = "MzM5ODc4NDg1NzU1NDI4ODY0.DFrBxA.79udW8StpzwAvAPaCs_wGEv1Two";
+
+var voiceChannel = null;
+var servers = {};
+
 
 // JSON for JWU quotes
 var jwu_quotes = [
@@ -99,8 +104,36 @@ var commands = [
       var rand =  Math.floor(Math.random() * NUM_STRATS);
       message.channel.sendMessage(pubgstrats[rand].strat);
     }
+  },
+  {
+    command: "everydaybro",
+    description: "Plays Everyday Bro",
+    parameters:[],
+    execute: function(message, params){
+      var voiceChannel;
+
+      if (!message.member.voiceChannel){ // User is not in a voice channel
+        message.channel.sendMessage("You must be in a voice channel to use this command");
+      } else {
+        voiceChannel = message.member.voiceChannel; // Find the voice channel that the message was entered from
+        voiceChannel.join().then(function(connection){ // Bot joins the voice channel
+          playEverydayBro(connection, message);
+        });
+      }
+
+    }
   }
 ];
+
+function playEverydayBro(connection, message){
+  var server = servers[message.guild.id];
+
+  server.dispatcher = connection.playStream(YTDL("https://www.youtube.com/watch?v=hSlb1ezRqfA", {filter:'audioonly'}));
+
+  server.dispatcher.on(end, function(){
+    connection.disconnect();
+  });
+}
 
 bot.on('ready', () => {
   bot.user.setGame('Type ' + PREFIX + 'help')
