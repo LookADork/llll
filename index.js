@@ -102,6 +102,10 @@ var commands = [
   }
 ];
 
+bot.on('ready', () => {
+  bot.user.setGame('Type ' + PREFIX + 'help')
+});
+
 bot.on('message', (message) => {
   var msg = message.content;
   var pre = msg[0] + "" + msg[1];
