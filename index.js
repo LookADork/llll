@@ -17,6 +17,15 @@ var jwu_quotes = [
   {"quote": "I have to wake up at 6 A.M." }
 ];
 
+// Pubg Strats
+var pubgstrats = [
+  {strat: "Drop Big Box"},
+  {strat: "Drop Titties"},
+  {strat: "AFK Strat"},
+  {strat: "Spawn Island"},
+  {strat: "Land away from ZICO and get flamed"}
+];
+
 // List of commands in json format
 var commands = [
   {
@@ -79,6 +88,16 @@ var commands = [
       const NUM_JWU_QUOTES = 8;
       var rand =  Math.floor(Math.random() * NUM_JWU_QUOTES);
       message.channel.sendMessage(jwu_quotes[rand].quote);
+    }
+  },
+  {
+    command:"pubgstrats",
+    description: "Tells you which strat to run on your next pubg game",
+    parameters:[],
+    execute: function(message, params){
+      const NUM_STRATS = "5";
+      var rand =  Math.floor(Math.random() * NUM_STRATS);
+      message.channel.sendMessage(pubgstrats[rand].strat);
     }
   }
 ];
