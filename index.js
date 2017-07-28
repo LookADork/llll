@@ -5,12 +5,10 @@ const embed = new Discord.RichEmbed()
 
 const PREFIX = '//'; // Command Prefix
 
-var token = "MzM5ODc4NDg1NzU1NDI4ODY0.DFrBxA.79udW8StpzwAvAPaCs_wGEv1Two";
+var token = "";
 
 var voiceChannel = null;
 var servers = {};
-var queue = [];
-var isPlaying = false;
 
 // List of commands in json format
 var commands = [
@@ -133,76 +131,120 @@ var commands = [
     }
   },
   {
+    command: "time",
+    description: "Returns the time",
+    parameters:[],
+    execute: function(message, params){
+      var d = new Date();
+      var hours;
+      var minutes = d.getUTCMinutes();
+      var t;
+
+      if (d.getUTCHours() == 0){
+        hours = 12;
+      } else {
+        hours = (d.getUTCHours() % 12);
+      }
+      hours -= 6;
+
+      if (minutes < 10){
+        minutes = "0" + minutes;
+      }
+
+      if ((d.getUTCHours() % 12 - 6) >= 6){
+        t = "A.M.";
+      } else {
+        t = "P.M.";
+      }
+
+      message.channel.sendMessage("It's only " + hours + ":" + minutes + " " + t);
+    }
+  },
+  {
     command: "play",
     description: "Plays the given youtube link",
     parameters:['yt_link'],
     execute: function(message,params){
-
 
       if (!message.member.voiceChannel){ // User is not in a voice channel
         message.channel.sendMessage("You must be in a voice channel to use this command");
         return;
       }
 
-      if (!servers[message.guild.id]) servers[message.guild.id] = {
-        queue:[]
-      };
+      // If the queue is empty create one
+      if (!servers[message.guild.id]){
+        servers[message.guild.id] = {
+          queue: []
+        };
+      }
 
       var server = servers[message.guild.id];
+      server.queue.push(params[1]); // Adds a song to the queue
 
-      if (!message.guild.voiceConnection) message.member.voiceChannel.join().then(function(connection){
-        if (isPlaying){ //Player is already playing
-          queue = queue.concat(params[1]);
-        } else { //Player is not playing
-          queue = queue.concat(params[1]);
-          isPlaying = true;
-          play(connection, message);
-        }
-      });
+      if (!message.guild.voiceConnection){
+        message.member.voiceChannel.join().then(function(connection){
+          play(connection, message); // Start the player
+        });
+      }
+
     }
-  },
-  {
-
   },
   {
     command: "stop",
     description: "Stops playing music",
     parameters:[],
     execute: function(message, params){
-      voiceChannel = message.member.voiceChannel;
-      voiceChannel.join().then(function(connection){ // Bot joins the voice channel
+      message.member.voiceChannel.join().then(function(connection){
         connection.disconnect();
       });
-      queue = [];
-      isPlaying = false;
     }
-  }
+  },
+  {
+    command: "skip",
+    description: "Skips the current song",
+    parameters:[],
+    execute: function(message, params){
+      var server = servers[message.guild.id];
+
+      if (server.dispatcher){
+        server.dispatcher.end();
+      }
+    }
+  },
+  /*{
+    command: "queue",
+    description: "Displays the current music queue",
+    parameters:[],
+    execute: function(message, params){
+      var queue = "QUEUE:\n";
+      var server = servers[message.guild.id];
+      var count = 0;
+
+      while(server.queue[count]){
+        queue += (count + 1 ) + ". " + server.queue[count] + "\n";
+        count++;
+      }
+      message.channel.sendMessage(queue);
+    }
+  }*/
 ];
 
 function play(connection, message){
   var server = servers[message.guild.id];
 
-  server.dispatcher = connection.playStream(YTDL(queue[0], {filter:'audioonly'}));
+  try{
+    server.dispatcher = connection.playStream(YTDL(server.queue[0], {filter:'audioonly'}));
 
-  shift(queue); //Remove first song from the queue
-
-  server.dispatcher.on('end', function(){ // On song end
-    if (queue[0] != null){ // Check if there are more songs in the queue
-       play(connection, message); // Play next song
-    } else {
-      connection.disconnect(); // Disconnect bot when there are no more songs in the queue
-    }
-  });
-}
-
-function shift(queue){
-  var count = 1;
-
-  queue[0] = null;
-
-  while (queue[count] != null){
-    queue[count - 1] = queue[count];
-    count++;
+    server.dispatcher.on('end', function(){ // On song end
+      server.queue.shift(); //Remove first song from the queue
+      if (server.queue[0]){ // Check if there are more songs in the queue
+        play(connection, message); // Play next song
+      } else {
+        connection.disconnect(); // Disconnect bot when there are no more songs in the queue
+      }
+    });
+  } catch(err){
+    message.channel.sendMessage('Invalid link!');
   }
 }
 
