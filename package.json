@@ -18,6 +18,8 @@
   "homepage": "https://github.com/andusy/Discord-Bot#readme",
   "dependencies": {
     "discord.js": "^11.1.0",
+    "node-gyp": "^3.6.2",
+    "node-opus": "^0.2.6",
     "opusscript": "0.0.3",
     "ytdl-core": "^0.15.0"
   }

@@ -77,6 +77,30 @@ var commands = [
     }
   },
   {
+    command:"hug",
+    description: "Send a user a hug",
+    parameters: ['user'],
+    execute: function(message, params){
+      var rand =  Math.floor(Math.random() * NUM_HUG);
+
+      embed.setImage(hug[rand].link)
+
+      message.channel.sendMessage(params[1] + ", " + message.member + " hugged you", {embed});
+    }
+  },
+  {
+    command:"cry",
+    description: "sad bois",
+    parameters: [],
+    execute: function(message, params){
+      var rand =  Math.floor(Math.random() * NUM_CRY);
+
+      embed.setImage(cry[rand].link)
+
+      message.channel.sendMessage("", {embed});
+    }
+  },
+  {
     command:"shitjwusays",
     description: "Sends a random JWu 2k17 quote",
     parameters:[],
@@ -161,6 +185,20 @@ var commands = [
     }
   },
   {
+    command: "echo",
+    description: "Repeats the user",
+    parameters:['text'],
+    execute: function (message, params){
+      var text = "";
+      count = 1;
+      while(params[count]){
+        text += params[count] + " ";
+        count++;
+      }
+      message.channel.sendMessage(text);
+    }
+  },
+  {
     command: "play",
     description: "Plays the given youtube link",
     parameters:['yt_link'],
@@ -194,9 +232,13 @@ var commands = [
     description: "Stops playing music",
     parameters:[],
     execute: function(message, params){
+      /*
       message.member.voiceChannel.join().then(function(connection){
         connection.disconnect();
-      });
+      });*/
+      if (message.guild.voiceConnection){
+        message.guild.voiceConnection.disconnect();
+      }
     }
   },
   {
@@ -245,6 +287,7 @@ function play(connection, message){
     });
   } catch(err){
     message.channel.sendMessage('Invalid link!');
+    server.queue.shift();
   }
 }
 
@@ -339,12 +382,34 @@ var pubgstrats = [
   {strat: "Don't pick up anything less than a 4x scope. You can just hold shift"}
 ];
 
-const NUM_KISS = 5;
+const NUM_KISS = 6;
 // Kiss Gifs
 var kiss = [
   {link:'https://media0.giphy.com/media/l0Eryp2ZPdCmeMIb6/giphy.gif'},
   {link:'https://scontent.fyyz1-1.fna.fbcdn.net/v/t1.0-9/14191941_10205738006688913_6874955034717212194_n.jpg?oh=38dfc711445fd42464a664378c58c197&oe=5A0A1521'},
   {link:'https://media2.giphy.com/media/3o72FiXBdWRy3aZHJm/giphy.gif'},
   {link:'https://media1.giphy.com/media/10UUe8ZsLnaqwo/giphy.gif'},
-  {link:'https://media.giphy.com/media/G3va31oEEnIkM/giphy.gif'}
+  {link:'https://media.giphy.com/media/G3va31oEEnIkM/giphy.gif'},
+  {link:'https://media2.giphy.com/media/CdFWnuCgiMPte/giphy.gif'}
+];
+
+const NUM_HUG = 6;
+// Hug Gifs
+var hug = [
+  {link:'https://media2.giphy.com/media/mmPgxbuPiwCQg/giphy.gif'},
+  {link:'https://media0.giphy.com/media/8tpiC1JAYVMFq/giphy.gif'},
+  {link:'https://media1.giphy.com/media/X4pI9XchDNsu4/giphy.gif'},
+  {link:'https://media0.giphy.com/media/OiKAQbQEQItxK/giphy.gif'},
+  {link:'https://media3.giphy.com/media/LSOCIyd7LRjRS/giphy.gif'},
+  {link:'https://media2.giphy.com/media/lXiRKBj0SAA0EWvbG/giphy.gif'}
+];
+
+const NUM_CRY = 6;
+// Hug Gifs
+var cry = [
+  {link:'https://media0.giphy.com/media/Xs4TtKRfCTE9G/giphy.gif'},
+  {link:'https://media1.giphy.com/media/26FPImXfDlv4AFbBC/giphy.gif'},
+  {link:'https://media1.giphy.com/media/2Z5sMN0DSuAP6/giphy.gif'},
+  {link:'https://media0.giphy.com/media/4NuAILyDbmD16/giphy.gif'},
+  {link:'https://media1.giphy.com/media/tSVJrUNa15oA0/giphy.gif'}
 ];
