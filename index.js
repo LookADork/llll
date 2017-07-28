@@ -404,7 +404,7 @@ var hug = [
   {link:'https://media2.giphy.com/media/lXiRKBj0SAA0EWvbG/giphy.gif'}
 ];
 
-const NUM_CRY = 6;
+const NUM_CRY = 5;
 // Hug Gifs
 var cry = [
   {link:'https://media0.giphy.com/media/Xs4TtKRfCTE9G/giphy.gif'},
