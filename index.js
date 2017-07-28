@@ -31,7 +31,7 @@ var commands = [
         count++;
       }
 
-      message.author.sendMessage(list_of_commands);// PMs the user the list of commands
+      message.author.send(list_of_commands);// PMs the user the list of commands
     }
   },
   {
@@ -39,7 +39,7 @@ var commands = [
     description: "Responds with pong",
     parameters: [],
     execute: function(message, params){
-      message.channel.sendMessage('pong');
+      message.channel.send('pong');
     }
   },
   {
@@ -73,7 +73,7 @@ var commands = [
 
       embed.setImage(kiss[rand].link)
 
-      message.channel.sendMessage(params[1] + ", you got a kiss from " + message.member, {embed});
+      message.channel.send(params[1] + ", you got a kiss from " + message.member, {embed});
     }
   },
   {
@@ -85,7 +85,7 @@ var commands = [
 
       embed.setImage(hug[rand].link)
 
-      message.channel.sendMessage(params[1] + ", " + message.member + " hugged you", {embed});
+      message.channel.send(params[1] + ", " + message.member + " hugged you", {embed});
     }
   },
   {
@@ -97,7 +97,7 @@ var commands = [
 
       embed.setImage(cry[rand].link)
 
-      message.channel.sendMessage("", {embed});
+      message.channel.send("", {embed});
     }
   },
   {
@@ -106,7 +106,7 @@ var commands = [
     parameters:[],
     execute: function(message, params){
       var rand =  Math.floor(Math.random() * NUM_JWU_QUOTES);
-      message.channel.sendMessage(jwu_quotes[rand].quote);
+      message.channel.send(jwu_quotes[rand].quote);
     }
   },
   {
@@ -115,7 +115,7 @@ var commands = [
     parameters:[],
     execute: function(message, params){
       var rand =  Math.floor(Math.random() * NUM_STRATS);
-      message.channel.sendMessage(pubgstrats[rand].strat);
+      message.channel.send(pubgstrats[rand].strat);
     }
   },
   {
@@ -126,7 +126,7 @@ var commands = [
       var voiceChannel;
 
       if (!message.member.voiceChannel){ // User is not in a voice channel
-        message.channel.sendMessage("You must be in a voice channel to use this command");
+        message.channel.send("You must be in a voice channel to use this command");
       } else {
         voiceChannel = message.member.voiceChannel; // Find the voice channel that the message was entered from
         voiceChannel.join().then(function(connection){ // Bot joins the voice channel
@@ -144,7 +144,7 @@ var commands = [
       var voiceChannel;
 
       if (!message.member.voiceChannel){ // User is not in a voice channel
-        message.channel.sendMessage("You must be in a voice channel to use this command");
+        message.channel.send("You must be in a voice channel to use this command");
       } else {
         voiceChannel = message.member.voiceChannel; // Find the voice channel that the message was entered from
         voiceChannel.join().then(function(connection){ // Bot joins the voice channel
@@ -181,7 +181,7 @@ var commands = [
         t = "P.M.";
       }
 
-      message.channel.sendMessage("It's only " + hours + ":" + minutes + " " + t);
+      message.channel.send("It's only " + hours + ":" + minutes + " " + t);
     }
   },
   {
@@ -195,7 +195,7 @@ var commands = [
         text += params[count] + " ";
         count++;
       }
-      message.channel.sendMessage(text);
+      message.channel.send(text);
     }
   },
   {
@@ -205,7 +205,7 @@ var commands = [
     execute: function(message,params){
 
       if (!message.member.voiceChannel){ // User is not in a voice channel
-        message.channel.sendMessage("You must be in a voice channel to use this command");
+        message.channel.send("You must be in a voice channel to use this command");
         return;
       }
 
@@ -266,7 +266,7 @@ var commands = [
         queue += (count + 1 ) + ". " + server.queue[count] + "\n";
         count++;
       }
-      message.channel.sendMessage(queue);
+      message.channel.send(queue);
     }
   }*/
 ];
@@ -286,7 +286,7 @@ function play(connection, message){
       }
     });
   } catch(err){
-    message.channel.sendMessage('Invalid link!');
+    message.channel.send('Invalid link!');
     server.queue.shift();
   }
 }
