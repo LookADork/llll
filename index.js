@@ -48,7 +48,16 @@ var commands = [
     parameters: [],
     execute: function(message, params){
       var roll =  Math.floor(Math.random() * 6) + 1;
-      message.reply("You rolled a " + roll)
+      message.reply("You rolled a " + roll);
+    }
+  },
+  {
+    command: "8ball",
+    description: "Ask the magic 8 ball a question",
+    parameters: [],
+    execute: function(message, params){
+      var rand =  Math.floor(Math.random() * NUM_ANS);
+      message.reply(m8ball[rand].reply);
     }
   },
   {
@@ -110,6 +119,15 @@ var commands = [
     }
   },
   {
+    command: "trivia",
+    description: "Useless trivia",
+    parameters:[],
+    execute: function(message, params){
+      var rand =  Math.floor(Math.random() * NUM_TRIVIA);
+      message.channel.send(trivia[rand].facts);
+    }
+  },
+  {
     command:"pubgstrats",
     description: "Tells you which strat to run on your next pubg game",
     parameters:[],
@@ -166,16 +184,24 @@ var commands = [
 
       if (d.getUTCHours() == 0){
         hours = 12;
+      } if (d.getUTCHours() <= 6){
+        hours = (d.getUTCHours() % 12);
       } else {
         hours = (d.getUTCHours() % 12);
       }
       hours -= 6;
 
+      if (hours < 0){
+        hours += 12;
+      } else if (hours == 0){
+        hours = 12;
+      }
+
       if (minutes < 10){
         minutes = "0" + minutes;
       }
 
-      if ((d.getUTCHours() % 12 - 6) >= 6){
+      if (d.getUTCHours() >= 6 && d.getUTCHours() < 18){
         t = "A.M.";
       } else {
         t = "P.M.";
@@ -382,11 +408,10 @@ var pubgstrats = [
   {strat: "Don't pick up anything less than a 4x scope. You can just hold shift"}
 ];
 
-const NUM_KISS = 6;
+const NUM_KISS = 5;
 // Kiss Gifs
 var kiss = [
   {link:'https://media0.giphy.com/media/l0Eryp2ZPdCmeMIb6/giphy.gif'},
-  {link:'https://scontent.fyyz1-1.fna.fbcdn.net/v/t1.0-9/14191941_10205738006688913_6874955034717212194_n.jpg?oh=38dfc711445fd42464a664378c58c197&oe=5A0A1521'},
   {link:'https://media2.giphy.com/media/3o72FiXBdWRy3aZHJm/giphy.gif'},
   {link:'https://media1.giphy.com/media/10UUe8ZsLnaqwo/giphy.gif'},
   {link:'https://media.giphy.com/media/G3va31oEEnIkM/giphy.gif'},
@@ -405,11 +430,49 @@ var hug = [
 ];
 
 const NUM_CRY = 5;
-// Hug Gifs
+// cry Gifs
 var cry = [
   {link:'https://media0.giphy.com/media/Xs4TtKRfCTE9G/giphy.gif'},
   {link:'https://media1.giphy.com/media/26FPImXfDlv4AFbBC/giphy.gif'},
   {link:'https://media1.giphy.com/media/2Z5sMN0DSuAP6/giphy.gif'},
   {link:'https://media0.giphy.com/media/4NuAILyDbmD16/giphy.gif'},
   {link:'https://media1.giphy.com/media/tSVJrUNa15oA0/giphy.gif'}
+];
+
+const NUM_TRIVIA = 8;
+// trivia
+var trivia = [
+  {facts:'In Africa, every 60 seconds a minute passes.'},
+  {facts:'Reindeer like to eat bananas.'},
+  {facts:'One quarter of the bones in your body are in your feet.'},
+  {facts:'All polar bears are left-handed.'},
+  {facts:"A pig's orgasm lasts for 30 minutes."},
+  {facts:'A pregnant goldfish is called a twit.'},
+  {facts:'England is my city.'},
+  {facts:"Josh didn't invite Drake to his wedding."}
+];
+
+const NUM_ANS = 20;
+// 8ball
+var m8ball = [
+  {reply:'It is certain'},
+  {reply:'It is decidedly so'},
+  {reply:'Without a doubt'},
+  {reply:'Yes definitely'},
+  {reply:'You may rely on it'},
+  {reply:'As I see it, yes'},
+  {reply:'Most likely'},
+  {reply:'Outlook good'},
+  {reply:'Yes'},
+  {reply:'Signs point to yes'},
+  {reply:'Reply hazy, try again'},
+  {reply:'Ask again later'},
+  {reply:'Better not tell you now'},
+  {reply:'Cannot predict now'},
+  {reply:'Concentrate and ask again'},
+  {reply:"Don't count on it"},
+  {reply:'My reply is no'},
+  {reply:'My sources say no'},
+  {reply:'Outlook not so good'},
+  {reply:'Very doubtful'}
 ];
