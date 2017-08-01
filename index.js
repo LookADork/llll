@@ -294,7 +294,72 @@ var commands = [
       }
       message.channel.send(queue);
     }
-  }*/
+  },*/
+  {
+    command: "availableplaylists",
+    description: "View the dev playlist title/number",
+    parameters:[],
+    execute: function(message, params){
+      var count = 0;
+      var str = "Currently available playlists include:\n";
+
+      while(playlists[count] != null){
+        str += playlists[count].num + ". " + playlists[count].name + "\n";
+        count++;
+      }
+      message.channel.send(str);
+    }
+  },
+  {
+    command: "viewplaylist",
+    description: "View the songs in the selected dev playlists",
+    parameters:["playlistNum"],
+    execute: function(message, params){
+      var count = 0;
+      var str = "Number of songs: " + playlists[params[1] - 1].numSongs + "\nTracklist:\n";
+
+      if (params[1] == 1){ // Hype playlist
+        for (i = 0; i < Hype.length; i++){
+          str += (i + 1) + ". " + Hype[i].song + "\n";
+        }
+      } else {
+        message.channel.send("Invalid playlist!");
+      }
+      message.channel.send(str);
+    }
+  },
+  {
+    command: "playplaylist",
+    description: "plays the given playlist",
+    parameters:["playlistNum"],
+    execute: function(message, params){
+
+    }
+  },
+  {
+    command: "pauseplaylist",
+    description: "Pauses the current song on the playlist",
+    parameters:[],
+    execute: function(message, params){
+
+    }
+  },
+  {
+    command: "skipplaylist",
+    description: "Skips a song on the current playlist",
+    parameters:[],
+    execute: function(message, params){
+
+    }
+  },
+  {
+    command: "shuffleplaylist",
+    description: "Shuffles the playlist",
+    parameters:[],
+    execute: function(message, params){
+
+    }
+  }
 ];
 
 function play(connection, message){
@@ -475,4 +540,15 @@ var m8ball = [
   {reply:'My sources say no'},
   {reply:'Outlook not so good'},
   {reply:'Very doubtful'}
+];
+
+var playlists = [
+  {num: 1, name: "Hype", numSongs: 2},
+  //{num: 2, name: "KHipHop"},
+  //{num: 3, name: "KPop"}
+];
+
+var Hype = [
+  {song: "형 (Hyung) (Feat. Dok2, Simon Dominic, Tiger JK) - Dumbfoundead", file: "형 (Hyung) (Feat. Dok2, Simon Dominic.mp3"},
+  {song: "물 (Water) (Feat. G.Soul) - Dumbfoundead", file:  "물 (Water) (Feat. G.Soul).mp3"}
 ];
