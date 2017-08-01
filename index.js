@@ -5,10 +5,13 @@ const embed = new Discord.RichEmbed()
 
 const PREFIX = '//'; // Command Prefix
 
-var token = "";
+var token = "MzM5ODc4NDg1NzU1NDI4ODY0.DFtBZw.X8af61S4AbWG1vbuUnktzSmEwGE";
 
 var voiceChannel = null;
 var servers = {};
+
+var songNum = 0;
+var shuffle = false;
 
 // List of commands in json format
 var commands = [
@@ -333,6 +336,23 @@ var commands = [
     description: "plays the given playlist",
     parameters:["playlistNum"],
     execute: function(message, params){
+      songNum = 0;
+
+      if (message.guild.voiceConnection){
+        message.guild.voiceConnection.disconnect();
+      }
+
+      if (!message.member.voiceChannel){ // User is not in a voice channel
+        message.channel.send("You must be in a voice channel to use this command");
+        return;
+      }
+
+      if (!message.guild.voiceConnection){
+        message.member.voiceChannel.join().then(function(connection){
+          playlist(connection, message, params[1])
+        });
+      }
+
 
     }
   },
@@ -357,10 +377,41 @@ var commands = [
     description: "Shuffles the playlist",
     parameters:[],
     execute: function(message, params){
-
+      if (shuffle){
+        shuffle = false;
+        message.channel.send("Shuffle is now off.");
+      } else {
+        shuffle = true;
+        message.channel.send("Shuffle is now on.");
+      }
     }
   }
 ];
+
+function playlist(connection, message, playlistNum){
+  var song, rand;
+  var path;
+
+  // Play the playlist corresponding with the playlist number
+  if (playlistNum == 1){ // Hype
+    path = "./media/playlists/Hype/";
+    if (shuffle){
+      rand = Math.floor(Math.random() * playlists[playlistNum - 1].numSongs);
+      song = Hype[rand].file;
+    } else {
+      song = Hype[songNum].file;
+    }
+
+    const dispatcher = connection.playFile(path);
+    songNum ++;
+
+    if(songNum == playlists[playlistNum - 1].numSongs){
+      songNum = 0;
+    }
+  }
+
+    dispatcher.on("end", end => playlist(playlistNum));
+}
 
 function play(connection, message){
   var server = servers[message.guild.id];
@@ -549,6 +600,6 @@ var playlists = [
 ];
 
 var Hype = [
-  {song: "형 (Hyung) (Feat. Dok2, Simon Dominic, Tiger JK) - Dumbfoundead", file: "형 (Hyung) (Feat. Dok2, Simon Dominic.mp3"},
+  {song: "형 (Hyung) (Feat. Dok2, Simon Dominic, Tiger JK) - Dumbfoundead", file: "형 (Hyung) (Feat. Dok2, Simon Dominic, Tiger JK).mp3"},
   {song: "물 (Water) (Feat. G.Soul) - Dumbfoundead", file:  "물 (Water) (Feat. G.Soul).mp3"}
 ];
