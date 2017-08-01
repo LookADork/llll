@@ -49,15 +49,26 @@ Music:
 
 **skip:** Skips the current song.
 
+**availableplaylists:** View the dev playlist title/number.
+
+**viewplaylists <number>:** Views the songs in the selected dev playlist.
+
+**playplaylist <number>:** Plays the selected dev playlist.
+
+**shuffleplaylist:** Turns shuffle on/off.
+
+
 Meme:
 --------
-First 3 commands are memes made from quotes said over discord.
+First 4 commands are memes made from quotes said over discord.
 
 **shitjwusays:** Sends a random jwu 2k17 quote.
 
 **pubgstrats:** Tells you which strat to run on your next battlegrounds match.
 
 **time:** Mountain time.
+
+**noinvite <something>:** Drake's tweet from when he didn't get invited to Josh's wedding altered.
 
 **everydaybro:** England is my city.
 
