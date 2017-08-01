@@ -60,5 +60,5 @@ First 3 commands are memes made from quotes said over discord.
 
 **everydaybro:** England is my city.
 
-**team10hours:"" 10 hours of everyday bro.
+**team10hours:** 10 hours of everyday bro.
 
