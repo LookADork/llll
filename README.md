@@ -52,6 +52,7 @@ Music:
 Meme:
 --------
 First 3 commands are memes made from quotes said over discord.
+
 **shitjwusays:** Sends a random jwu 2k17 quote.
 
 **pubgstrats:** Tells you which strat to run on your next battlegrounds match.
