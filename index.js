@@ -5,16 +5,17 @@ const embed = new Discord.RichEmbed()
 
 const PREFIX = '//'; // Command Prefix
 
-var token = "MzM5ODc4NDg1NzU1NDI4ODY0.DFtBZw.X8af61S4AbWG1vbuUnktzSmEwGE";
+var token = "MzM5ODc4NDg1NzU1NDI4ODY0.DGZ7HQ.SXtqu8kZjfEKshCfM1ZMmRPffuY";
 
 var voiceChannel = null;
 var servers = {};
 
 var songNum = 0;
 var shuffle = false;
+var currentlyPlayin;
 
 // List of commands in json format
-var commands = [
+var commands = [/*
   {
     command: "help",
     description: "",
@@ -36,7 +37,7 @@ var commands = [
 
       message.author.send(list_of_commands);// PMs the user the list of commands
     }
-  },
+  },*/
   {
     command: "ping",
     description: "Responds with pong",
@@ -299,119 +300,20 @@ var commands = [
     }
   },*/
   {
-    command: "availableplaylists",
-    description: "View the dev playlist title/number",
-    parameters:[],
+    command: "noinvite",
+    description: "Drake's tweet from when he didn't get invited to Josh's wedding altered",
+    parameters: ["word"],
     execute: function(message, params){
-      var count = 0;
-      var str = "Currently available playlists include:\n";
+      var str = "True colors have come out today.\nMessage is loud and clear.Ties are\nofficially cut. I'll miss you brotha\n\nWhen you're not invited to\n" ;
 
-      while(playlists[count] != null){
-        str += playlists[count].num + ". " + playlists[count].name + "\n";
-        count++;
+      for (i = 1; i < params.length; i++){
+        str += params[i] + " ";
       }
+      str += " the message is clear...";
       message.channel.send(str);
-    }
-  },
-  {
-    command: "viewplaylist",
-    description: "View the songs in the selected dev playlists",
-    parameters:["playlistNum"],
-    execute: function(message, params){
-      var count = 0;
-      var str = "Number of songs: " + playlists[params[1] - 1].numSongs + "\nTracklist:\n";
-
-      if (params[1] == 1){ // Hype playlist
-        for (i = 0; i < Hype.length; i++){
-          str += (i + 1) + ". " + Hype[i].song + "\n";
-        }
-      } else {
-        message.channel.send("Invalid playlist!");
-      }
-      message.channel.send(str);
-    }
-  },
-  {
-    command: "playplaylist",
-    description: "plays the given playlist",
-    parameters:["playlistNum"],
-    execute: function(message, params){
-      songNum = 0;
-
-      if (message.guild.voiceConnection){
-        message.guild.voiceConnection.disconnect();
-      }
-
-      if (!message.member.voiceChannel){ // User is not in a voice channel
-        message.channel.send("You must be in a voice channel to use this command");
-        return;
-      }
-
-      if (!message.guild.voiceConnection){
-        message.member.voiceChannel.join().then(function(connection){
-          playlist(connection, message, params[1])
-        });
-      }
-
-
-    }
-  },
-  {
-    command: "pauseplaylist",
-    description: "Pauses the current song on the playlist",
-    parameters:[],
-    execute: function(message, params){
-
-    }
-  },
-  {
-    command: "skipplaylist",
-    description: "Skips a song on the current playlist",
-    parameters:[],
-    execute: function(message, params){
-
-    }
-  },
-  {
-    command: "shuffleplaylist",
-    description: "Shuffles the playlist",
-    parameters:[],
-    execute: function(message, params){
-      if (shuffle){
-        shuffle = false;
-        message.channel.send("Shuffle is now off.");
-      } else {
-        shuffle = true;
-        message.channel.send("Shuffle is now on.");
-      }
     }
   }
 ];
-
-function playlist(connection, message, playlistNum){
-  var song, rand;
-  var path;
-
-  // Play the playlist corresponding with the playlist number
-  if (playlistNum == 1){ // Hype
-    path = "./media/playlists/Hype/";
-    if (shuffle){
-      rand = Math.floor(Math.random() * playlists[playlistNum - 1].numSongs);
-      song = Hype[rand].file;
-    } else {
-      song = Hype[songNum].file;
-    }
-
-    const dispatcher = connection.playFile(path);
-    songNum ++;
-
-    if(songNum == playlists[playlistNum - 1].numSongs){
-      songNum = 0;
-    }
-  }
-
-    dispatcher.on("end", end => playlist(playlistNum));
-}
 
 function play(connection, message){
   var server = servers[message.guild.id];
@@ -591,15 +493,4 @@ var m8ball = [
   {reply:'My sources say no'},
   {reply:'Outlook not so good'},
   {reply:'Very doubtful'}
-];
-
-var playlists = [
-  {num: 1, name: "Hype", numSongs: 2},
-  //{num: 2, name: "KHipHop"},
-  //{num: 3, name: "KPop"}
-];
-
-var Hype = [
-  {song: "형 (Hyung) (Feat. Dok2, Simon Dominic, Tiger JK) - Dumbfoundead", file: "형 (Hyung) (Feat. Dok2, Simon Dominic, Tiger JK).mp3"},
-  {song: "물 (Water) (Feat. G.Soul) - Dumbfoundead", file:  "물 (Water) (Feat. G.Soul).mp3"}
 ];
