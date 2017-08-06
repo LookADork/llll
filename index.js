@@ -5,14 +5,10 @@ const embed = new Discord.RichEmbed()
 
 const PREFIX = '//'; // Command Prefix
 
-var token = "MzM5ODc4NDg1NzU1NDI4ODY0.DGZ7HQ.SXtqu8kZjfEKshCfM1ZMmRPffuY";
+var token = "";
 
 var voiceChannel = null;
 var servers = {};
-
-var songNum = 0;
-var shuffle = false;
-var currentlyPlayin;
 
 // List of commands in json format
 var commands = [/*
