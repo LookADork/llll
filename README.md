@@ -49,15 +49,6 @@ Music:
 
 **skip:** Skips the current song.
 
-**availableplaylists:** View the dev playlist title/number.
-
-**viewplaylists <number>:** Views the songs in the selected dev playlist.
-
-**playplaylist <number>:** Plays the selected dev playlist.
-
-**shuffleplaylist:** Turns shuffle on/off.
-
-
 Meme:
 --------
 First 4 commands are memes made from quotes said over discord.
