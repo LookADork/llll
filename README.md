@@ -1,6 +1,6 @@
-Description: 
+Description:
 ============
-A discord bot made for fun. Originally used to meme the dumb stuff that was said over discord. 
+A discord bot made for fun. Originally used to meme the dumb stuff that was said over discord.
 
 Dependencies:
 ============
@@ -23,12 +23,23 @@ Basic:
 
 **echo:** Repeats the user
 
+Emotes:
+--------
+
+Because discord emotes are too small.
+
+**pogchamp**
+
+**anele**
+
+**1g**
+
 Random:
 --------
 **roll:** Rolls a die.
 
 **8ball:** Ask the magic 8 ball a question (no parameters).
- 
+
 **flip:** Flips a coin.
 
 **cry:** i cri.
@@ -64,4 +75,3 @@ First 4 commands are memes made from quotes said over discord.
 **everydaybro:** England is my city.
 
 **team10hours:** 10 hours of everyday bro.
-

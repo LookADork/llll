@@ -110,6 +110,33 @@ var commands = [/*
     }
   },
   {
+    command: "pogchamp",
+    description: "pogchamp",
+    parameters:[],
+    execute: function (message, params){
+      embed.setImage('https://vignette3.wikia.nocookie.net/kancolle/images/2/21/PogChamp_Emote.png/revision/latest?cb=20160817151144');
+      message.channel.send("",{embed});
+    }
+  },
+  {
+    command: "anele",
+    description: "anele",
+    parameters:[],
+    execute: function (message, params){
+      embed.setImage('https://yt3.ggpht.com/-BcbQODNuf-Y/AAAAAAAAAAI/AAAAAAAAAAA/DMhDz6snMNc/s200-c-k-no-mo-rj-c0xffffff/photo.jpg');
+      message.channel.send("",{embed});
+    }
+  },
+  {
+    command: "1g",
+    description: "1g",
+    parameters:[],
+    execute: function (message, params){
+      embed.setImage('https://pbs.twimg.com/profile_images/692508045683904512/OU19Wmbe.png');
+      message.channel.send("",{embed});
+    }
+  },
+  {
     command:"shitjwusays",
     description: "Sends a random JWu 2k17 quote",
     parameters:[],
