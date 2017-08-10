@@ -5,7 +5,7 @@ const embed = new Discord.RichEmbed()
 
 const PREFIX = '//'; // Command Prefix
 
-var token = "";
+var token = "MzM5ODc4NDg1NzU1NDI4ODY0.DGgX1Q.boNfYwQv0OsCAveI1zTHMWZc6B4";
 
 var voiceChannel = null;
 var servers = {};
@@ -422,17 +422,20 @@ var pubgstrats = [
   {strat: "Don't pick up anything less than a 4x scope. You can just hold shift"}
 ];
 
-const NUM_KISS = 5;
+const NUM_KISS = 8;
 // Kiss Gifs
 var kiss = [
   {link:'https://media0.giphy.com/media/l0Eryp2ZPdCmeMIb6/giphy.gif'},
   {link:'https://media2.giphy.com/media/3o72FiXBdWRy3aZHJm/giphy.gif'},
   {link:'https://media1.giphy.com/media/10UUe8ZsLnaqwo/giphy.gif'},
   {link:'https://media.giphy.com/media/G3va31oEEnIkM/giphy.gif'},
-  {link:'https://media2.giphy.com/media/CdFWnuCgiMPte/giphy.gif'}
+  {link:'https://media2.giphy.com/media/CdFWnuCgiMPte/giphy.gif'},
+  {link:'https://media2.giphy.com/media/qvwnbNRNoa04U/giphy.gif'},
+  {link:'https://media2.giphy.com/media/Jao0tQ4cns17W/giphy.gif'},
+  {link:'https://media2.giphy.com/media/3oriNVc5SDHOsWcCM8/giphy.gif'}
 ];
 
-const NUM_HUG = 6;
+const NUM_HUG = 7;
 // Hug Gifs
 var hug = [
   {link:'https://media2.giphy.com/media/mmPgxbuPiwCQg/giphy.gif'},
@@ -440,17 +443,19 @@ var hug = [
   {link:'https://media1.giphy.com/media/X4pI9XchDNsu4/giphy.gif'},
   {link:'https://media0.giphy.com/media/OiKAQbQEQItxK/giphy.gif'},
   {link:'https://media3.giphy.com/media/LSOCIyd7LRjRS/giphy.gif'},
-  {link:'https://media2.giphy.com/media/lXiRKBj0SAA0EWvbG/giphy.gif'}
+  {link:'https://media2.giphy.com/media/lXiRKBj0SAA0EWvbG/giphy.gif'},
+  {link:'https://media1.giphy.com/media/X4pI9XchDNsu4/giphy.gif'}
 ];
 
-const NUM_CRY = 5;
+const NUM_CRY = 6;
 // cry Gifs
 var cry = [
   {link:'https://media0.giphy.com/media/Xs4TtKRfCTE9G/giphy.gif'},
   {link:'https://media1.giphy.com/media/26FPImXfDlv4AFbBC/giphy.gif'},
   {link:'https://media1.giphy.com/media/2Z5sMN0DSuAP6/giphy.gif'},
   {link:'https://media0.giphy.com/media/4NuAILyDbmD16/giphy.gif'},
-  {link:'https://media1.giphy.com/media/tSVJrUNa15oA0/giphy.gif'}
+  {link:'https://media1.giphy.com/media/tSVJrUNa15oA0/giphy.gif'},
+  {link:'https://media2.giphy.com/media/KsUNeuivwZTmo/giphy.gif'}
 ];
 
 const NUM_TRIVIA = 8;
