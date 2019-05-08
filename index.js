@@ -5,7 +5,7 @@ const embed = new Discord.RichEmbed()
 
 const PREFIX = '//'; // Command Prefix
 
-var token = "";
+var token = "NTA4MjExMzI1ODQ0MDYyMjIz.XNHWsA.KNfbUpjkzlzffn3tH3ciWg9au0U";
 
 var voiceChannel = null;
 var servers = {};
